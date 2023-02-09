@@ -59,7 +59,7 @@ export default function ButtonAppBar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Image Storage
           </Typography>
-          {(status == "authenticated" && session.user._id == "63e3d9234007a4562eddc9e4") &&
+          {(status == "authenticated" && session.user._id == process.env.ADMIN) &&
            <>
                 <Button onClick={handleOpen} color="inherit">Upload</Button>
                     <Modal
