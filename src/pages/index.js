@@ -106,6 +106,29 @@ const ImageItem = (props) => {
       })
     })
   }
+  function copyToClipboard(textToCopy) {
+    // navigator clipboard api needs a secure context (https)
+    if (navigator.clipboard && window.isSecureContext) {
+        // navigator clipboard api method'
+        return navigator.clipboard.writeText(textToCopy);
+    } else {
+        // text area method
+        let textArea = document.createElement("textarea");
+        textArea.value = textToCopy;
+        // make the textarea out of viewport
+        textArea.style.position = "fixed";
+        textArea.style.left = "-999999px";
+        textArea.style.top = "-999999px";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        return new Promise((res, rej) => {
+            // here the magic happens
+            document.execCommand('copy') ? res() : rej();
+            textArea.remove();
+        });
+    }
+  }
   return (
     <motion.div
            key={image._id}
@@ -151,7 +174,7 @@ const ImageItem = (props) => {
                   <DynamicReactJson key={image._id} collapsed={true} src={image.metadata} theme="monokai"/>
                 </Box>
              </Modal>
-    <MenuItem onClick={() => { navigator.clipboard.writeText(`${window.location.href}${(image.path.split("public")[1]).slice(1)}`) }}>Share</MenuItem>
+    <MenuItem onClick={() => { copyToClipboard(`${window.location.href}${(image.path.split("public")[1]).slice(1)}`) }}>Share</MenuItem>
            </Menu>
 
          </motion.div>
