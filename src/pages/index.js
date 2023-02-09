@@ -95,6 +95,17 @@ const ImageItem = (props) => {
   const handleModalOpen = () => setModalOpen(true)
   const handleModalClose = () => setModalOpen(false)
 
+  const downloadImage = (url, name) => {
+    fetch(url).then(res => {
+      res.blob().then(blob => {
+        let url = window.URL.createObjectURL(blob);
+        let a = document.createElement('a')
+        a.href = url;
+        a.download = name;
+        a.click()
+      })
+    })
+  }
   return (
     <motion.div
            key={image._id}
@@ -128,7 +139,7 @@ const ImageItem = (props) => {
              }}
              key={image._id}
            >
-             <MenuItem >Download</MenuItem>
+             <MenuItem onClick={() => {downloadImage(`${window.location.href}${(image.path.split("public")[1]).slice(1)}`, image.name)}}>Download</MenuItem>
              <MenuItem onClick={handleModalOpen}>Info</MenuItem>
              <Modal
                open={modalOpen}
@@ -140,6 +151,7 @@ const ImageItem = (props) => {
                   <DynamicReactJson key={image._id} collapsed={true} src={image.metadata} theme="monokai"/>
                 </Box>
              </Modal>
+    <MenuItem onClick={() => { navigator.clipboard.writeText(`${window.location.href}${(image.path.split("public")[1]).slice(1)}`) }}>Share</MenuItem>
            </Menu>
 
          </motion.div>
