@@ -121,7 +121,7 @@ const ImageItem = (props) => {
            aria-expanded={open ? 'true' : undefined}
          >
             <Image
-             src={image.path.split("public")[1]}
+             src={`${process.env.FILE_HOST}/${(image.path.split("public")[1]).slice(1)}`}
              height={height}
              width={500}
            />
@@ -136,11 +136,11 @@ const ImageItem = (props) => {
              }}
              key={image._id}
            >
-             <MenuItem onClick={() => {downloadImage(`${window.location.href}${(image.path.split("public")[1]).slice(1)}`, image.name); handleClose()}}>Download</MenuItem>
+    <MenuItem onClick={() => {downloadImage(`${process.env.FILE_HOST}${(image.path.split("public")[1]).slice(1)}`, image.name); handleClose()}}>Download</MenuItem>
              <MenuItem onClick={() => {handleModalOpen(); handleClose()}}>Info</MenuItem>
     {/* <MenuItem onClick={() => { copyToClipboard(`${window.location.href}${(image.path.split("public")[1]).slice(1)}`) }}>Share</MenuItem> */}
              <CopyToClipboard
-               text={`${window.location.href}${(image.path.split("public")[1]).slice(1)}`}
+    text={`${process.env.FILE_HOST}${(image.path.split("public")[1]).slice(1)}`}
                onCopy={() => {handleSBClick(); handleClose();}}
              >
                 <MenuItem>Share</MenuItem>

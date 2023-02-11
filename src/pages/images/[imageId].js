@@ -63,7 +63,7 @@ const ImageDisplay = (props) => {
             minWidth="100vw"
           >
             <img
-                src={`${(image?.path?.split("public")[1])}`}
+              src={`${process.env.FILE_HOST}/${(image.path.split("public")[1]).slice(1)}`}
                 style={{
                 maxWidth: '90vw',
                 maxHeight: `90vh`
