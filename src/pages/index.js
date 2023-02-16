@@ -26,7 +26,11 @@ const Home = (props) => {
     //   setImages(newImages)
     // }
     // getImages();
-    setImages(JSON.parse(props.images))
+    if(localStorage.getItem("sort") == "up-lt") {
+      setImages((JSON.parse(props.images)).reverse())
+    } else {
+      setImages(JSON.parse(props.images))
+    }
   }, [])
 
   return (
